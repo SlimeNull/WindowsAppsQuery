@@ -3,9 +3,13 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using Windows.Management.Deployment;
 
+// ========== Method 1: PackageManager 
 PackageManager packageManager = new PackageManager();
 var packages = packageManager.FindPackagesForUser(WindowsIdentity.GetCurrent().User!.Value);
 
+
+
+// ========== Method 2: NetworkIsolationEnumAppContainers
 
 var r = NativeDll.NetworkIsolationEnumAppContainers(0, out var num, out var ptr);
 if (r != 0)
@@ -31,3 +35,4 @@ for (int i = 0; i < num; i++)
 }
 
 NativeDll.NetworkIsolationFreeAppContainers(ptr);
+
